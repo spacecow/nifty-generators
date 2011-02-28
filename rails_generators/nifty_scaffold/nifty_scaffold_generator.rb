@@ -2,6 +2,7 @@ class NiftyScaffoldGenerator < Rails::Generator::Base
   attr_accessor :name, :attributes, :controller_actions
 
   def initialize(runtime_args, runtime_options = {})
+    p "fuck me most!!!!!!!!!!!!!!!!!!!!!!"
     super
     usage if @args.empty?
 
@@ -41,6 +42,7 @@ class NiftyScaffoldGenerator < Rails::Generator::Base
   end
 
   def manifest
+        p "FUCK YOU!!!!!!!!!!!!!!!!!!!!!!!!!!"
     record do |m|
       unless options[:skip_model]
         m.directory "app/models"
@@ -68,7 +70,8 @@ class NiftyScaffoldGenerator < Rails::Generator::Base
 
         m.directory "app/helpers"
         m.template "helper.rb", "app/helpers/#{plural_name}_helper.rb"
-
+        m.template "application_controller.rb", "app/controllers/application_controller.rb"
+        
         m.directory "app/views/#{plural_name}"
         controller_actions.each do |action|
           if File.exist? source_path("views/#{view_language}/#{action}.html.#{view_language}")
