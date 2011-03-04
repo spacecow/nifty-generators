@@ -13,7 +13,12 @@ module Nifty
           copy_file 'stylesheet.sass', "public/stylesheets/sass/#{file_name}.sass"
         else
           template 'layout.html.erb', "app/views/layouts/#{file_name}.html.erb"
-          copy_file 'stylesheet.css', "public/stylesheets/#{file_name}.css"
+          template "application.sass", "app/stylesheets/application.sass"
+          template "application_controller.rb", "app/controllers/application_controller.rb"
+          template "application_helper.rb", "app/helpers/application_helper.rb"
+          template "en.yml", "config/locales/en.yml"
+          template "Gemfile", "Gemfile"
+          template 'generator', 'generator'
         end
         copy_file 'layout_helper.rb', 'app/helpers/layout_helper.rb'
         copy_file 'error_messages_helper.rb', 'app/helpers/error_messages_helper.rb'

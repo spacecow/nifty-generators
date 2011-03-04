@@ -3,6 +3,7 @@ class Create<%= user_plural_class_name %> < ActiveRecord::Migration
     create_table :<%= user_plural_name %> do |t|
       t.string :username
       t.string :email
+      t.integer :roles_mask
     <%- if options[:authlogic] -%>
       t.string :persistence_token
       t.string :crypted_password

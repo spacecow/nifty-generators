@@ -1,0 +1,9 @@
+rails g nifty:layout
+bundle
+rm public/index.html
+rake db:create:all
+rails g nifty:authentication
+rails g cancan:ability
+compass init rails . --using blueprint/semantic
+rails g formtastic:install
+rake db:migrate

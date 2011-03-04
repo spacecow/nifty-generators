@@ -1,0 +1,7 @@
+#!/bin/sh
+cp spec/factories.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/factories.rb
+cp features/step_definitions/list_steps.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/list_steps.rb 
+cp features/step_definitions/functions.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/functions.rb
+cp features/users/roles.feature ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/roles.feature
+cp features/step_definitions/user_steps.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/user_steps.rb 
+cp features/users/login.feature ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/login.feature

@@ -2,19 +2,23 @@
 
 <%- for attribute in model_attributes -%>
 <p>
-  <strong><%= attribute.human_name.titleize %>:</strong>
+  <strong><%%= t('formtastic.labels.<%= attribute.name %>') %>:</strong>
   <%%= @<%= instance_name %>.<%= attribute.name %> %>
 </p>
 <%- end -%>
 
 <p>
 <%- if action? :edit -%>
-  <%%= link_to "Edit", <%= item_path :action => :edit, :instance_variable => true %> %> |
+  <%% if can? :edit, @<%= class_name.underscore.humanize.downcase %> %>
+    <%%= link_to t(:edit), <%= item_path :action => :edit, :instance_variable => true %> %> |
+  <%% end %>
 <%- end -%>
 <%- if action? :destroy -%>
-  <%%= link_to "Destroy", <%= item_path :instance_variable => true %>, :confirm => 'Are you sure?', :method => :delete %> |
+  <%% if can? :delete, @<%= class_name.underscore.humanize.downcase %> %>
+    <%%= link_to t(:delete), <%= item_path :instance_variable => true %>, :confirm => 'Are you sure?', :method => :delete %> |
+  <%% end %>
 <%- end -%>
 <%- if action? :index -%>
-  <%%= link_to "View All", <%= items_path %> %>
+  <%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, <%= class_name %> %>
 <%- end -%>
 </p>

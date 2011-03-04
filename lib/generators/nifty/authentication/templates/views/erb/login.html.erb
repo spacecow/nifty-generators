@@ -1,19 +1,10 @@
 <%% title "Log in" %>
 
-<p>Don't have an account? <%%= link_to "Sign up!", signup_path %></p>
-
 <%- if options[:authlogic] -%>
-<%%= form_for @<%= session_singular_name %> do |f| %>
-  <%%= f.error_messages %>
-  <p>
-    <%%= f.label :username %><br />
-    <%%= f.text_field :username %>
-  </p>
-  <p>
-    <%%= f.label :password %><br />
-    <%%= f.password_field :password %>
-  </p>
-  <p><%%= f.submit "Log in" %></p>
+<%%= semantic_form_for @<%= session_singular_name %> do |f| %>
+  <%%= f.input :username %>
+  <%%= f.input :password %>
+  <%%= f.submit t(:log_in), :class => :submit %>
 <%% end %>
 <%- else -%>
 <%%= form_tag <%= session_plural_name %>_path do %>

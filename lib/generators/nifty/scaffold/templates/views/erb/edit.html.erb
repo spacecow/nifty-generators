@@ -1,14 +1,16 @@
-<%% title "Edit <%= singular_name.titleize %>" %>
+<%% title edit(:<%= class_name.underscore.humanize.downcase %>) %>
 
 <%= render_form %>
 
 <%- if actions? :show, :index -%>
 <p>
 <%- if action? :show -%>
-  <%%= link_to "Show", <%= item_path :instance_variable => true %> %> |
+  <%% if can? :show, @<%= class_name.underscore.humanize.downcase %> -%>
+    <%%= link_to t(:show), <%= item_path :instance_variable => true %> %> |
+  <%% end %>
 <%- end -%>
 <%- if action? :index -%>
-  <%%= link_to "View All", <%= items_path %> %>
+  <%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, <%= class_name %> %>
 <%- end -%>
 </p>
 <%- end -%>

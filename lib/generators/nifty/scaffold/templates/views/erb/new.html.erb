@@ -1,7 +1,7 @@
-<%% title "New <%= singular_name.titleize %>" %>
+<%% title new(:<%= class_name.underscore.humanize.downcase %>) %>
 
 <%= render_form %>
 
 <%- if action? :index -%>
-<p><%%= link_to "Back to List", <%= items_path %> %></p>
+<p><%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, @<%= class_name %> %></p>
 <%- end -%>

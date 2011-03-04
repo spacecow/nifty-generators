@@ -41,6 +41,7 @@ module Nifty
         template "views/#{view_language}/edit.html.#{view_language}", "app/views/#{user_plural_name}/edit.html.#{view_language}"
         template "views/#{view_language}/_form.html.#{view_language}", "app/views/#{user_plural_name}/_form.html.#{view_language}"
         template "views/#{view_language}/login.html.#{view_language}", "app/views/#{session_plural_name}/new.html.#{view_language}"
+        template "views/#{view_language}/change_roles.html.#{view_language}", "app/views/#{user_plural_name}/change_roles.html.#{view_language}"
       end
 
       def create_lib_files
@@ -71,6 +72,15 @@ module Nifty
           template 'tests/rspec/user.rb', "spec/models/#{user_singular_name}_spec.rb"
           template 'tests/rspec/users_controller.rb', "spec/controllers/#{user_plural_name}_controller_spec.rb"
           template 'tests/rspec/sessions_controller.rb', "spec/controllers/#{session_plural_name}_controller_spec.rb"
+          template "tests/rspec/factory_girl.rb", "features/support/factory_girl.rb"
+          template "tests/rspec/cucumber.yml", "config/cucumber.yml"
+          template "tests/rspec/factories.rb", "spec/factories.rb"
+          template "tests/rspec/list_steps.rb", "features/step_definitions/list_steps.rb"
+          template "tests/rspec/functions.rb", "features/step_definitions/functions.rb"
+          template "tests/rspec/roles.feature", "features/users/roles.feature"
+          template "tests/rspec/user_steps.rb", "features/step_definitions/user_steps.rb"
+          template "tests/rspec/login.feature", "features/users/login.feature"
+          template "tests/rspec/update", "update"
         else
           template 'fixtures.yml', "test/fixtures/#{user_plural_name}.yml"
           template "tests/#{test_framework}/user.rb", "test/unit/#{user_singular_name}_test.rb"

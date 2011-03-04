@@ -29,4 +29,8 @@ class <%= user_plural_class_name %>Controller < ApplicationController
       render :action => 'edit'
     end
   end
+
+  def change_roles
+    @users = User.order('username asc')
+  end
 end

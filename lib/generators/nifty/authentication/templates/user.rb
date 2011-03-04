@@ -6,6 +6,7 @@ class <%= user_class_name %> < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation
 
   attr_accessor :password
+  before_create :set_role
   before_save :prepare_password
 
   validates_presence_of :username
@@ -16,6 +17,19 @@ class <%= user_class_name %> < ActiveRecord::Base
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
 
+  ROLES = %w[god admin mini_admin user]
+
+  def role?( role ); roles.include? role.to_s end
+  def role_symbols; roles.map(&:to_sym) end
+
+  def roles=(roles)
+    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
+  end
+  def roles
+    ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
+  end
+  def set_role; self.roles = ["user"] end
+  
   # login can be either username or email address
   def self.authenticate(login, pass)
     <%= user_singular_name %> = find_by_username(login) || find_by_email(login)
