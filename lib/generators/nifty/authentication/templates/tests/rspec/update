@@ -5,3 +5,10 @@ cp features/step_definitions/functions.rb ../nifty-generators/lib/generators/nif
 cp features/users/roles.feature ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/roles.feature
 cp features/step_definitions/user_steps.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/user_steps.rb 
 cp features/users/login.feature ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/login.feature
+cp features/step_definitions/web_steps_own.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/web_steps_own.r
+cp app/models/ability.rb ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/ability.rb
+cp app/views/users/edit_roles.html.erb ../nifty-generators/lib/generators/nifty/authentication/templates/views/erb/edit_roles.html.erb
+cp features/users/index.feature ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/index.feature
+cp app/controllers/users_controller.rb ../nifty-generators/lib/generators/nifty/authentication/templates/users_controller.rb
+cp app/views/users/index.html.erb ../nifty-generators/lib/generators/nifty/authentication/templates/views/erb/index.html.erb
+cp update ../nifty-generators/lib/generators/nifty/authentication/templates/tests/rspec/update 

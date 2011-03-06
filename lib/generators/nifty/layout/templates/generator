@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rails g nifty:layout
 bundle
 rm public/index.html
 rake db:create:all

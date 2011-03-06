@@ -6,5 +6,5 @@ Given /^I am logged in as "([^"]*)"$/ do |user|
 end
 
 Given /^I am logged in as #{capture_model}$/ do |mdl|
-  Given %(I am logged in as "#{mdl.username}")
+  Given %(I am logged in as "#{model(mdl).username}")
 end

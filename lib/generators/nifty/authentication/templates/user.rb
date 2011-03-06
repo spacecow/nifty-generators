@@ -28,7 +28,7 @@ class <%= user_class_name %> < ActiveRecord::Base
   def roles
     ROLES.reject { |r| ((roles_mask || 0) & 2**ROLES.index(r)).zero? }
   end
-  def set_role; self.roles = ["user"] end
+  def set_role; self.roles = ["user"] unless self.roles end
   
   # login can be either username or email address
   def self.authenticate(login, pass)

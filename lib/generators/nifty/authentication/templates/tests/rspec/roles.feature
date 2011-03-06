@@ -1,22 +1,21 @@
 Feature:
 Background:
-Given a user exists with username: "lifter"
-And a user exists with username: "dover", roles_mask: 2
+Given a user "lifter" exists with username: "lifter"
+And a user "dover" exists with username: "dover", roles_mask: 2
 
+@test
 Scenario Outline: You must be admin to be able to change user roles
 Given a user exists with roles_mask: <role>
 And I am logged in as that user
-When I go to the change roles users page
-Then I should be on the change roles users page
+When I go to user: "lifter"'s edit roles page
+Then I should <redirect> on user: "lifter"'s edit roles page
 Examples:
-| role |
-|    1 |
-|    2 |
-|    3 |
+| role | redirect |
+|    2 | be       |
+|    4 | not be   |
+|    8 | not be   |
 
-Scenario: Users should be listed in alphabetical order after username
+Scenario: Update roles
 Given I am logged in as "dover"
-When I go to the change roles users page
-Then I should see "dover" listed first
-And I should see "lifter" listed second
-
+When I go to user: "lifter"'s edit roles page
+And I press "Update User"

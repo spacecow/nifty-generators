@@ -41,7 +41,8 @@ module Nifty
         template "views/#{view_language}/edit.html.#{view_language}", "app/views/#{user_plural_name}/edit.html.#{view_language}"
         template "views/#{view_language}/_form.html.#{view_language}", "app/views/#{user_plural_name}/_form.html.#{view_language}"
         template "views/#{view_language}/login.html.#{view_language}", "app/views/#{session_plural_name}/new.html.#{view_language}"
-        template "views/#{view_language}/change_roles.html.#{view_language}", "app/views/#{user_plural_name}/change_roles.html.#{view_language}"
+        template "views/#{view_language}/edit_roles.html.#{view_language}", "app/views/#{user_plural_name}/edit_roles.html.#{view_language}"
+        template "views/#{view_language}/index.html.#{view_language}", "app/views/#{user_plural_name}/index.html.#{view_language}"        
       end
 
       def create_lib_files
@@ -80,6 +81,8 @@ module Nifty
           template "tests/rspec/roles.feature", "features/users/roles.feature"
           template "tests/rspec/user_steps.rb", "features/step_definitions/user_steps.rb"
           template "tests/rspec/login.feature", "features/users/login.feature"
+          template "tests/rspec/web_steps_own.rb", "features/step_definitions/web_steps_own.rb"
+          template "tests/rspec/ability.rb", "app/models/ability.rb"
           template "tests/rspec/update", "update"
         else
           template 'fixtures.yml', "test/fixtures/#{user_plural_name}.yml"

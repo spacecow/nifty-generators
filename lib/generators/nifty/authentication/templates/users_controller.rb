@@ -1,16 +1,19 @@
-class <%= user_plural_class_name %>Controller < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+class UsersController < ApplicationController
+#  before_filter :login_required, :except => [:new, :create]
+  load_and_authorize_resource
 
+  def index
+    @users = User.order('username asc')
+  end
+  
   def new
-    @<%= user_singular_name %> = <%= user_class_name %>.new
+    @user = User.new
   end
 
   def create
-    @<%= user_singular_name %> = <%= user_class_name %>.new(params[:<%= user_singular_name %>])
-    if @<%= user_singular_name %>.save
-    <%- unless options[:authlogic] -%>
-      session[:<%= user_singular_name %>_id] = @<%= user_singular_name %>.id
-    <%- end -%>
+    @user = User.new(params[:user])
+    if @user.save
+      session[:user_id] = @user.id
       redirect_to root_url, :notice => "Thank you for signing up! You are now logged in."
     else
       render :action => 'new'
@@ -18,19 +21,23 @@ class <%= user_plural_class_name %>Controller < ApplicationController
   end
 
   def edit
-    @<%= user_singular_name %> = current_<%= user_singular_name %>
+    @user = current_user
   end
 
   def update
-    @<%= user_singular_name %> = current_<%= user_singular_name %>
-    if @<%= user_singular_name %>.update_attributes(params[:<%= user_singular_name %>])
+    @user = current_user
+    if @user.update_attributes(params[:user])
       redirect_to root_url, :notice => "Your profile has been updated."
     else
       render :action => 'edit'
     end
   end
 
-  def change_roles
-    @users = User.order('username asc')
+  def edit_roles
+  end
+
+  def update_roles
+    p params
   end
 end
+
