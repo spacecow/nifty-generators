@@ -10,5 +10,6 @@ rails g rspec:install
 rails g cucumber:install --capybara --rspec
 rails g pickle --paths --email
 rails g nifty:authentication --rspec
+rails g nifty:scaffold cat name:string
 rake db:migrate
 rake db:test:clone

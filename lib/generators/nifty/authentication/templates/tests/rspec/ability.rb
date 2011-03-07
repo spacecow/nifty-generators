@@ -3,16 +3,25 @@ class Ability
 
   def initialize(user)
     can :index, Cat
+    can :create, User
 
     if user
       if user.role? :god
         can :manage, :all
-      end
-      if user.role? :admin
-        can [:edit_roles,:index], User
-      end
-      if user.role? :mini_admin
-        can :index, User
+      else
+        if user.role?(:member) || user.role?(:mini_admin) || user.role?(:admin)
+          can :update, User, :id => user.id
+          can :show, User
+          can [:create,:show], Cat
+        end
+        if user.role?(:mini_admin) || user.role?(:admin)
+          can :index, User
+          can :update, Cat
+        end
+        if user.role? :admin
+          can [:update, :edit_roles, :update_roles, :destroy], User
+          can :destroy, Cat
+        end
       end
     end
     # Define abilities for the passed in user here. For example:

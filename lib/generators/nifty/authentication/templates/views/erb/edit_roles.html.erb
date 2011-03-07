@@ -1,4 +1,13 @@
-<%= semantic_form_for @user, :url => update_roles_user_path(@user), :method => :put do |f| %>
-<%# hidden_field_tag "user_ids[]", user.id %>
-<%= f.submit :class => :submit %>
-<% end %>
+<%% title edit_p(:role) %>
+
+<%%= semantic_form_for @user, :url => update_roles_user_path(@user), :method => :put do |f| %>
+  <%% for role in User::ROLES[1,User::ROLES.length-1] %>
+    <p>
+      <label>
+        <%%= check_box_tag "user[roles][]", role, @user.roles.include?( role ) %>
+        <%%= t(role).humanize %>
+      </label>
+    </p>
+  <%% end %>
+<%%= f.submit update_p(:role), :class => :small_submit %>
+<%% end %>

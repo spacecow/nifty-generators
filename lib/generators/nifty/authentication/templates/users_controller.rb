@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_url, :notice => "Thank you for signing up! You are now logged in."
+      redirect_to @user, :notice => "Thank you for signing up! You are now logged in."
     else
       render :action => 'new'
     end
@@ -27,17 +27,26 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      redirect_to root_url, :notice => "Your profile has been updated."
+      redirect_to @user, :notice => "Your profile has been updated."
     else
       render :action => 'edit'
     end
   end
 
+  def destroy
+    redirect_to users_path
+  end
+  
   def edit_roles
   end
 
   def update_roles
-    p params
+    @user.roles = params[:user][:roles] unless params[:user].nil?
+    if @user.save
+      redirect_to users_path, :notice => updated_p(@user.username, :role)
+    else
+      render :action => 'edit_roles'
+    end
   end
 end
 

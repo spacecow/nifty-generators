@@ -18,4 +18,10 @@ Examples:
 Scenario: Update roles
 Given I am logged in as "dover"
 When I go to user: "lifter"'s edit roles page
-And I press "Update User"
+And I uncheck "Admin"
+And I check "Mini-admin"
+And I check "Member"
+And I press "Update Roles"
+Then I should see "Successfully updated lifter's roles." as notice flash message
+And a user should exist with username: "lifter", roles_mask: 12
+And I should be on the users page
