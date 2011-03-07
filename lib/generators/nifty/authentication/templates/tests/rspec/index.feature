@@ -12,11 +12,12 @@ Scenario Outline: Links within a user for different users
 Given a user exists with roles_mask: <role>
 And I am logged in as that user
 When I go to the users page
-Then I should <view> "Roles" within the first table row
+Then show me the page
+Then I should see links "<links>" within the first table row
 Examples:
-| role | view    |
-|    2 | see     |
-|    4 | not see |
+| role | links               |
+|    2 | Show Edit Roles Del |
+#|    4 | Show Edit Roles Del |
 
 Scenario: Follow links
 Given a user exists with roles_mask: 2
