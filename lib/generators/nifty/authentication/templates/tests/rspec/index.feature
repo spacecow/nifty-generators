@@ -9,15 +9,15 @@ Then I should see "dover" in the first table row
 And I should see "lifter" in the second table row
 
 Scenario Outline: Links within a user for different users
-Given a user exists with roles_mask: <role>
+Given a user exists with username: "dover"
+And a user exists with roles_mask: <role>, username: "me"
 And I am logged in as that user
 When I go to the users page
-Then show me the page
 Then I should see links "<links>" within the first table row
 Examples:
-| role | links               |
-|    2 | Show Edit Roles Del |
-#|    4 | Show Edit Roles Del |
+| role | links                  |
+|    2 | Show, Edit, Roles, Del |
+|    4 | Show, Edit             |
 
 Scenario: Follow links
 Given a user exists with roles_mask: 2

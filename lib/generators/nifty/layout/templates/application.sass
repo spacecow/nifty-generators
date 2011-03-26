@@ -11,6 +11,7 @@ $font_size: 14px
 $a_size: $font_size - 2px
 $h1_size: $font_size * 2
 
+$bg_colour: #ddd
 $link_colour: #4B7399
 $alert_dark: #933
 $notice_dark: #396
@@ -59,7 +60,7 @@ div#container
     padding: 2*$spacing 4*$spacing
     border: 1px solid black
     +border-radius($spacing)
-    +linear-gradient(color-stops(white, #ddd 33%, white), left)
+    +linear-gradient(color-stops(white, $bg_colour 33%, white), left)
     div#user_nav
       float: right
     form.formtastic

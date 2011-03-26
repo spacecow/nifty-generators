@@ -51,7 +51,12 @@ module Nifty
       end
 
       def create_routes
-        route "resources #{user_plural_name.to_sym.inspect}"
+        route "end"
+        route "  end"
+        route "    put 'update_roles'"
+        route "    get 'edit_roles'"
+        route "  member do"
+        route "resources #{user_plural_name.to_sym.inspect} do"
         route "resources #{session_plural_name.to_sym.inspect}"
         route "match 'login' => '#{session_plural_name}#new', :as => :login"
         route "match 'logout' => '#{session_plural_name}#destroy', :as => :logout"
@@ -78,7 +83,7 @@ module Nifty
           template "tests/rspec/cucumber.yml", "config/cucumber.yml"
           template "tests/rspec/factories.rb", "spec/factories.rb"
           template "tests/rspec/ability.rb", "app/models/ability.rb"
-          template "routes.rb", "config/routes.rb"
+#          template "routes.rb", "config/routes.rb"
           template "tests/rspec/users_controller_spec.rb", "spec/controllers/users_controller_spec.rb"
           template "tests/rspec/spec_helper.rb", "spec/spec_helper.rb"
           template "tests/rspec/env.rb", "features/support/env.rb"

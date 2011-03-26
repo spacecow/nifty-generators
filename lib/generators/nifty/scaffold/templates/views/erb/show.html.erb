@@ -7,7 +7,7 @@
 </p>
 <%- end -%>
 
-<p>
+<div id="bottom_links">
 <%- if action? :edit -%>
   <%% if can? :edit, @<%= class_name.underscore.humanize.downcase %> %>
     <%%= link_to t(:edit), <%= item_path :action => :edit, :instance_variable => true %> %> |
@@ -21,4 +21,4 @@
 <%- if action? :index -%>
   <%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, <%= class_name %> %>
 <%- end -%>
-</p>
+</div>

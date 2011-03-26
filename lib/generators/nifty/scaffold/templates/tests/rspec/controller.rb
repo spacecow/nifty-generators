@@ -20,7 +20,7 @@ describe <%= plural_class_name %>Controller do
     end
     
     <%= plural_class_name.underscore.downcase %>_controller_actions.each do |action,req|
-      if %w(new create).include?(action)
+      if action=="index"
         it "should reach the #{action} page" do
           send("#{req}", "#{action}", :id => @<%= class_name.underscore.downcase %>.id)
           response.redirect_url.should_not eq(login_url)
@@ -41,7 +41,7 @@ describe <%= plural_class_name %>Controller do
     end
     
     <%= plural_class_name.underscore.downcase %>_controller_actions.each do |action,req|
-      if %w(new create show).include?(action)
+      if %w(new create show index).include?(action)
         it "should reach the #{action} page" do
           send("#{req}", "#{action}", :id => @<%= class_name.underscore.downcase %>.id)
           response.redirect_url.should_not eq(root_url)
@@ -62,7 +62,7 @@ describe <%= plural_class_name %>Controller do
     end
     
     <%= plural_class_name.underscore.downcase %>_controller_actions.each do |action,req|
-      if %w(new create show index).include?(action)
+      if %w(new create show index edit update).include?(action)
         it "should reach the #{action} page" do
           send("#{req}", "#{action}", :id => @<%= class_name.underscore.downcase %>.id)
           response.redirect_url.should_not eq(root_url)

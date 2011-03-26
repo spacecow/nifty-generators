@@ -3,7 +3,7 @@
 <%= render_form %>
 
 <%- if actions? :show, :index -%>
-<p>
+<div id="bottom_links">
 <%- if action? :show -%>
   <%% if can? :show, @<%= class_name.underscore.humanize.downcase %> -%>
     <%%= link_to t(:show), <%= item_path :instance_variable => true %> %> |
@@ -12,5 +12,5 @@
 <%- if action? :index -%>
   <%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, <%= class_name %> %>
 <%- end -%>
-</p>
+</div>
 <%- end -%>

@@ -15,11 +15,11 @@ class Ability
           can [:create,:show], Cat
         end
         if user.role?(:mini_admin) || user.role?(:admin)
-          can :index, User
+          can [:index,:update], User
           can :update, Cat
         end
         if user.role? :admin
-          can [:update, :edit_roles, :update_roles, :destroy], User
+          can [:edit_roles, :update_roles, :destroy], User
           can :destroy, Cat
         end
       end

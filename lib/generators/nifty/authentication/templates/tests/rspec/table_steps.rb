@@ -16,6 +16,7 @@ Then /^I should not see "([^"]*)" within the (.+) table row$/ do |txt,order|
 end
 
 Then /^I should see links "([^"]*)" within the (.+) table row$/ do |lnks,order|
+  all("#{table_row order} a").map(&:text).join(", ").should eq lnks
 end
 
 

@@ -3,5 +3,8 @@
 <%= render_form %>
 
 <%- if action? :index -%>
-<p><%%= link_to view(:<%= class_name.underscore.humanize.downcase %>), <%= items_path %> if can? :index, @<%= class_name %> %></p>
+<div id="bottom_links">
+  <%%= link_to view(:<%= class_name.underscore.humanize.downcase %>),
+  <%= items_path %> if can? :index, @<%= class_name %> %>
+</div>
 <%- end -%>
