@@ -92,7 +92,7 @@ module Nifty
           template "tests/rspec/functions.rb", "features/step_definitions/functions.rb"
           template "tests/rspec/user_steps.rb", "features/step_definitions/user_steps.rb"
           template "tests/rspec/web_steps_own.rb", "features/step_definitions/web_steps_own.rb"
-          template "tests/rspec/table_steps.rb", "features/step_definitions/table_steps.rb"          
+          template "tests/rspec/table_steps.rb", "features/step_definitions/table_steps.rb"
           template "tests/rspec/roles.feature", "features/users/roles.feature"
           template "tests/rspec/login.feature", "features/users/login.feature"
           template "tests/rspec/index.feature", "features/users/index.feature"

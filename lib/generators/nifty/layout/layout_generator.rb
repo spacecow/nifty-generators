@@ -17,6 +17,7 @@ module Nifty
           template "application_controller.rb", "app/controllers/application_controller.rb"
           template "application_helper.rb", "app/helpers/application_helper.rb"
           template "en.yml", "config/locales/en.yml"
+          template "ja.yml", "config/locales/ja.yml"
           template "Gemfile", "Gemfile"
           template 'generator', 'generator'
         end

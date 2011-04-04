@@ -8,12 +8,16 @@ class ApplicationController < ActionController::Base
     end
   end
   protect_from_forgery
-  helper_method :current_user
+  before_filter :set_language
+  helper_method :current_user, :english?
 
+  def alert(act); t("alert.#{act}") end
   def created(s); success(:created,s) end
   def deleted(s); success(:deleted,s) end
   def d(s); t(s).downcase end
   def dp(s); pl(s).downcase end
+  def english?; session[:language] == 'en' end
+  def notification(act); t("notice.#{act}") end
   def pl(s); t(s).match(/\w/) ? t(s).pluralize : t(s) end  
   def success(act,mdl); t("success.#{act}",:obj=>d(mdl)) end
   def success_p(act,mdl); t("success.#{act}",:obj=>dp(mdl)) end
@@ -22,9 +26,22 @@ class ApplicationController < ActionController::Base
   def updated_p(s); success_p(:updated,s) end
   def updated_p(s1,s2); success_p(:updated,s1,s2) end
 
+  def toggle_language
+    session[:language] = (session[:language] == 'ja' ? 'en' : 'ja')
+    redirect_to :back
+  end
+  
   private
 
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    end
+    
+    def current_user_name; current_user && current_user.name end
+    def current_user_email; current_user && current_user.email end
+    def current_user_affiliation; current_user && current_user.affiliation end
+    
+    def set_language
+      I18n.locale = session[:language] || I18n.default_locale
     end
 end

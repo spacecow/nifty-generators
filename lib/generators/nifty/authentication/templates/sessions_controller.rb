@@ -1,41 +1,20 @@
-class <%= session_plural_class_name %>Controller < ApplicationController
-<%- if options[:authlogic] -%>
+class SessionsController < ApplicationController
   def new
-    @<%= session_singular_name %> = <%= session_class_name %>.new
   end
 
   def create
-    @<%= session_singular_name %> = <%= session_class_name %>.new(params[:<%= session_singular_name %>])
-    if @<%= session_singular_name %>.save
-      redirect_to_target_or_default root_url, :notice => "Logged in successfully."
+    user = User.authenticate(params[:login], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect_to_target_or_default root_url, :notice => t('success.logged_in')
     else
+      flash.now[:alert] = t('alert.invalid_login_or_password')
       render :action => 'new'
     end
   end
 
   def destroy
-    @<%= session_singular_name %> = <%= session_class_name %>.find
-    @<%= session_singular_name %>.destroy
-    redirect_to root_url, :notice => "You have been logged out."
+    session[:user_id] = nil
+    redirect_to root_url, :notice => t('success.logged_out')
   end
-<%- else -%>
-  def new
-  end
-
-  def create
-    <%= user_singular_name %> = <%= user_class_name %>.authenticate(params[:login], params[:password])
-    if <%= user_singular_name %>
-      session[:<%= user_singular_name %>_id] = <%= user_singular_name %>.id
-      redirect_to_target_or_default root_url, :notice => "Logged in successfully."
-    else
-      flash.now[:alert] = "Invalid login or password."
-      render :action => 'new'
-    end
-  end
-
-  def destroy
-    session[:<%= user_singular_name %>_id] = nil
-    redirect_to root_url, :notice => "You have been logged out."
-  end
-<%- end -%>
 end

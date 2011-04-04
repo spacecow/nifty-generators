@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-#  before_filter :login_required, :except => [:new, :create]
   load_and_authorize_resource
 
   def index
@@ -14,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to @user, :notice => "Thank you for signing up! You are now logged in."
+      redirect_to root_path, :notice => t('notice.thank_you_for_signing_up')
     else
       render :action => 'new'
     end
@@ -27,7 +26,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      redirect_to @user, :notice => "Your profile has been updated."
+      redirect_to root_path, :notice => updated(:profile)
     else
       render :action => 'edit'
     end
