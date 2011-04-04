@@ -34,9 +34,7 @@ Then /^I should see links "([^"]*)" within the (\w+) "([^"]*)" table row$/ do |l
 end
 
 
-
-
-
-
-def table_row(order); "table tr:nth-child(#{digit order})" end
-def table_row(tbl,order); "table##{tbl} tr:nth-child(#{digit order})" end
+def table_row(tbl="",order)
+  return "table##{tbl} tr:nth-child(#{digit order})" unless tbl.blank?
+  "table tr:nth-child(#{digit order})"
+end
