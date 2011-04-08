@@ -89,6 +89,7 @@ module Nifty
           template "tests/rspec/env.rb", "features/support/env.rb"
           template "tests/rspec/list_steps.rb", "features/step_definitions/list_steps.rb"
           template "tests/rspec/layout_steps.rb", "features/step_definitions/layout_steps.rb"
+          template "tests/rspec/form_steps.rb", "features/step_definitions/form_steps.rb"          
           template "tests/rspec/functions.rb", "features/step_definitions/functions.rb"
           template "tests/rspec/user_steps.rb", "features/step_definitions/user_steps.rb"
           template "tests/rspec/web_steps_own.rb", "features/step_definitions/web_steps_own.rb"
