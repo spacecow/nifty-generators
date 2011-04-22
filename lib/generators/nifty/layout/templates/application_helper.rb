@@ -4,7 +4,6 @@ module ApplicationHelper
   def current_language; english? ? t(:japanese) : t(:english) end
   def edit(s); t2(:edit,s) end
   def edit_p(s); tp2(:edit,s) end
-  def ft(s); t("formtastic.labels.#{s.to_s}") end
   def lbl(s); chain(:label,s) end
   def new(s); t2(:new,s) end
   def pl(s); t(s).match(/\w/) ? t(s).pluralize : t(s) end
