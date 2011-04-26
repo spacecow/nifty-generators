@@ -26,3 +26,4 @@ end
 When /^I click the image "([^"]*)"$/ do |file|
   find(:xpath, "//a/img[@alt='#{file}']/..").click
 end
+
