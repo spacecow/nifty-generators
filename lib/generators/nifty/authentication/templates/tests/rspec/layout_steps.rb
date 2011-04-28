@@ -12,3 +12,18 @@ end
 Then /^I should not see "([^"]*)" within the (.+) section$/ do |txt,div|
   Then %(I should not see "#{txt}" within "div##{underscore div}")
 end
+
+# LINKS -----------------------
+
+When /^I follow "([^"]*)" at the bottom of the page$/ do |lnk|
+  When %(I follow "#{lnk}" within the bottom links section)
+end
+
+When /^I follow "([^"]*)" within the (.+) section$/ do |lnk,div|
+  When %(I follow "#{lnk}" within "div##{underscore(div)}")
+end
+
+When /^I click the image "([^"]*)"$/ do |file|
+  find(:xpath, "//a/img[@alt='#{file}']/..").click
+end
+
