@@ -6,10 +6,7 @@ Then /^I should see "([^"]*)" within the (\w+) listing$/ do |txt,order|
   end
 end
 Then /^I should see "([^"]*)" within the (\w+) "([^"]*)" listing$/ do |txt,order,id|
-  Then %(I should see "#{txt}" within the #{order} #{underscore id} listing)
-end
-Then /^I should see "([^"]*)" within the (\w+) (.+) listing$/ do |txt,order,id|
-  with_scope(list_no(id,order)) do
+  with_scope(list_no(underscore(id),order)) do
     page.should have_content(txt)
   end
 end
@@ -30,9 +27,9 @@ end
 
 # AND ----------------------------
 
-Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) (.+) listing$/ do |txt1,txt2,order,lst|
-  Then %(I should see "#{txt1}" within the #{order} #{lst} listing)
-  And %(I should see "#{txt2}" within the #{order} #{lst} listing)
+Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) "([^"]*)" listing$/ do |txt1,txt2,order,lst|
+  Then %(I should see "#{txt1}" within the #{order} "#{lst}" listing)
+  And %(I should see "#{txt2}" within the #{order} "#{lst}" listing)
 end
 
 # LINKS --------------------------
