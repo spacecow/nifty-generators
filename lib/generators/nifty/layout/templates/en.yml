@@ -12,9 +12,9 @@ en:
   or: " or "
   possessive: "%{owner}'s %{obj}"
   profile: "Profile"
-  role: "Role"
   show: "Show"
   sign_up: "Sign up"
+  role: "Role"
   update: "Update"
   label:
     add: "Add %{obj}"
@@ -23,26 +23,32 @@ en:
     list: "List %{obj}"
     new: "New %{obj}"
     remove: "Remove %{obj}"
+    save: "Save %{obj}"
     send: "Send %{obj}"
     show: "Show %{obj}"
+    submit: "Submit %{obj}"
     update: "Update %{obj}"
     verify: "Verify %{obj}"
     view: "View %{obj}"
     view_own: "View own %{obj}"
   alert:
     invalid_login_or_password: "Invalid login or password."
+    incorrect: "%{obj} incorrect."
+    unauthorized_access: "Unauthorized access."
   notice:
+    logged_in: "Successfully logged in."
+    logged_out: "Successfully logged out."
     thank_you_for_sending: "Thank you. Your comment has been sent to the editor."
     thank_you_for_signing_up: "Thank you for signing up! You are now logged in."
   message:
     not_you?: "Not you?"
+    or: "%{obj1} or %{obj2}"
     sure?: "Are you sure?"
     welcome: "Welcome %{user}."
   success:
     created: "Successfully created %{obj}."
     deleted: "Successfully deleted %{obj}."
-    logged_out: "Successfully logged out."
-    logged_in: "Successfully logged in."
+    saved: "Successfully saved %{obj}."
     updated: "Successfully updated %{obj}."  
   formtastic:
     labels:
@@ -56,3 +62,5 @@ en:
 
   anonymous: "Anonymous"
   comment: "Comment"
+  my_opinion: "My Opinion"
+  opinion: "Opinion"
