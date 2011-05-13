@@ -1,3 +1,5 @@
+# TEXT -------------------------
+
 Then /^I should see "([^"]*)" as (\w+) flash message$/ do |txt,cat|
   Then %(I should see "#{txt}" within "div#flash_#{cat}")
 end
@@ -36,7 +38,7 @@ Then /^I should see no (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
   page.should have_no_css(cat_id(cat,id,order))
 end
 
-Then /^I should see a "([^"]*)" section$/ do |id|
+Then /^I should see (?:a|an) "([^"]*)" section$/ do |id|
   page.should have_css("div##{id}")
 end
 
@@ -48,10 +50,30 @@ Then /^I should see no (\w+) flash message$/ do |cat|
   page.should have_no_css("div#flash_#{cat}")
 end
 
+Then /^I should see no links at the bottom of the page$/ do
+  page.should have_no_css("div#bottom_links a")
+end
+
+
 # LINKS -----------------------
 
+Then /^I should see a "([^"]*)" link$/ do |lnk|
+  page.should have_css("a", :text => lnk)
+end
+
+Then /^I should see a "([^"]*)" image link$/ do |lnk|
+  page.should have_css("a img", :alt => lnk)
+end
+Then /^I should see no "([^"]*)" image link$/ do |lnk|
+  page.should have_no_css("a img", :alt => lnk)
+end
+
+Then /^I should see links "([^"]*)" at the (\w+) of the page$/ do |lnks,pos|
+  all("div##{pos}_links a").map(&:text).join(", ").should eq lnks
+end
+
 When /^I follow "([^"]*)" at the bottom of the page$/ do |lnk|
-  When %(I follow "#{lnk}" within the bottom links section)
+  When %(I follow "#{lnk}" within the "bottom links" section)
 end
 
 When /^I follow "([^"]*)" within the "([^"]*)" section$/ do |lnk,div|

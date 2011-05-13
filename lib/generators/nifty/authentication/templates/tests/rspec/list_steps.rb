@@ -1,3 +1,13 @@
+# TEXT LINK --------------------
+
+Then /^I should see (?:a|an) "([^"]*)" link within the (\w+) "([^"]*)" listing$/ do |lnk,order,id|
+  page.should have_css("#{list_no(id,order)} a", :text => lnk)
+end
+Then /^I should see no "([^"]*)" link within the (\w+) "([^"]*)" listing$/ do |lnk,order,id|
+  page.should have_no_css("#{list_no(id,order)} a", :text => lnk)
+end
+
+
 # TEXT --------------------------
 
 Then /^I should see "([^"]*)" within the (\w+) listing$/ do |txt,order|
@@ -5,17 +15,16 @@ Then /^I should see "([^"]*)" within the (\w+) listing$/ do |txt,order|
     page.should have_content(txt)
   end
 end
+
 Then /^I should not see "([^"]*)" within the "([^"]*)" listing$/ do |txt,lst|
   Then %(I should not see "#{txt}" within "ul##{underscore lst}")
 end
-
-# LINKS --------------------------
 
 def list_no(lst=nil,order)
   if lst.nil?
     "ul li:nth-child(#{digit order})"
   else
-    "ul##{lst} li:nth-child(#{digit order})"
+    "ul##{underscore(lst)} li:nth-child(#{digit order})"
   end
 end
   

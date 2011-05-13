@@ -6,6 +6,7 @@ Abc::Application.routes.draw do
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
 
+  resources :maintenances, :only => [:index,:edit,:update,:destroy]
   resources :sessions
   resources :users do
     member do

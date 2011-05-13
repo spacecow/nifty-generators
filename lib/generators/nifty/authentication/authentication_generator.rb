@@ -97,6 +97,9 @@ module Nifty
           template "tests/rspec/roles.feature", "features/users/roles.feature"
           template "tests/rspec/login.feature", "features/users/login.feature"
           template "tests/rspec/index.feature", "features/users/index.feature"
+          template "tests/rspec/maintenance_index.feature", "features/maintenances/index.feature"
+          template "tests/rspec/maintenance_ip.feature", "features/maintenances/ip.feature"
+          template "tests/rspec/maintenance_edit.feature", "features/maintenances/edit.feature"
           template "tests/rspec/update", "update"
         else
           template 'fixtures.yml', "test/fixtures/#{user_plural_name}.yml"
