@@ -106,6 +106,9 @@ def section_no(div=nil,order)
 end
 
 def cat_id(cat,id,order)
-  list_no(id,order) if cat=="listing"
-  section_no(id,order) if cat=="section"
+  if cat=="listing"
+    list_no(id,order) 
+  elsif cat=="section"
+    section_no(id,order) 
+  end
 end
