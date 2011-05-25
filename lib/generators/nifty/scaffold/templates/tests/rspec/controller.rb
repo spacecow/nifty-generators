@@ -33,7 +33,7 @@ describe <%= plural_class_name %>Controller do
   describe "a member is logged in" do
     before(:each) do
       user = Factory(:user, :roles_mask=>8)
-      @own_<%= class_name.underscore.downcase %> = Factory(:<%= class_name.underscore.downcase, :user_id => user.id %>)
+      @own_<%= class_name.underscore.downcase %> = Factory(:<%= class_name.underscore.downcase %>, :user_id => user.id )
       session[:user_id] = user.id
     end
     
