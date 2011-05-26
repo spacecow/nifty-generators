@@ -39,7 +39,27 @@ end
 # Fields -------------------------------
 
 Then /^the "([^"]*)" field should be empty$/ do |lbl|
-  Then %(the "#{lbl}" field should contain "")
+  field = find_field(lbl)
+  if field.tag_name == 'textarea'
+    field.text.should == ""
+  else
+    field.value.should == nil
+  end
+end
+Then /^the (\w+) "([^"]*)" field should be empty$/ do |ordr,lbl|
+  id = all(:css, "label", :text => lbl)[zdigit ordr][:for]
+  Then %(the "#{id}" field should be empty)
+end
+Then /^the (\w+) through (\w+) "([^"]*)" fields? should be empty$/ do |ordr1,ordr2,lbl|
+  (zdigit(ordr1)..zdigit(ordr2)).each do |ordr|
+    id = all(:css, "label", :text => lbl)[ordr][:for]
+    Then %(the "#{id}" field should be empty)
+  end  
+end
+
+Then /^the (\w+) "([^"]*)" field should contain "([^"]*)"$/ do |ordr,lbl,txt|
+  id = all(:css, "label", :text => lbl)[zdigit ordr][:for]
+  Then %(the "#{id}" field should contain "#{txt}")
 end
 
 When /^I fill in "([^"]*)" with "([^"]*)" within the (.+) section$/ do |fld, txt, div|
@@ -54,6 +74,10 @@ When /^I create (?:a|an) (\w+) with ("[^"]*")((?:, "[^"]*")*)$/ do |mdl, arg1, a
     When %(I fill in "#{$1}" with "#{$2}")
   end
   And %(I press "Create #{mdl.capitalize}")
+end
+
+Then /^I should see no "([^"]*)" field$/ do |txt|
+  page.should have_no_css("label", :text => txt)
 end
 
 # Functions ----------------------------
