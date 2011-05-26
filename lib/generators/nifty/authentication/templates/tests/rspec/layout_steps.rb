@@ -33,6 +33,9 @@ end
 Then /^the submenu "([^"]*)" should be active$/ do |menu|
   page.should have_css("li.active", :text => menu)
 end
+Then /^the submenu "([^"]*)" should be inactive$/ do |menu|
+  page.should have_no_css("li.active", :text => menu)
+end
 
 # EXISTENCE -------------------
 
@@ -65,6 +68,20 @@ Then /^I should see no links at the bottom of the page$/ do
   page.should have_no_css("div#bottom_links a")
 end
 
+Then /^I should see (?:a|an) "([^"]*)" image$/ do |alt|
+  page.should have_xpath("//img[@alt='#{alt}']")
+end
+Then /^I should see no "([^"]*)" image$/ do |alt|
+  page.should have_no_xpath("//img[@alt='#{alt}']")
+end
+Then /^I should see (?:a|an) "([^"]*)" image within the (\w+) "([^"]*)" (\w+)$/ do |img,ordr,id,cat|
+  Then %(I should see a "#{img}" image within "#{cat_id(cat,id,ordr)}")
+end
+Then /^I should see a "([^"]*)" image within "([^"]*)"$/ do |img,id|
+  with_scope(id) do
+    page.should have_xpath("//img[@alt='#{img}']")
+  end
+end
 
 # LINKS -----------------------
 
