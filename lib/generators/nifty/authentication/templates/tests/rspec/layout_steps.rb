@@ -33,6 +33,11 @@ end
 Then /^I should see a (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
   page.should have_css(cat_id(cat,id,order))
 end
+Then /^I should see a (\w+) through (\w+) "([^"]*)" (\w+)$/ do |ordr1,ordr2,id,cat|
+  (zdigit(ordr1)..zdigit(ordr2)).each do |ordr|
+    page.should have_css(cat_id(cat,id,zword(ordr)))
+  end  
+end
 
 Then /^I should see no (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
   page.should have_no_css(cat_id(cat,id,order))
@@ -104,11 +109,22 @@ def section_no(div=nil,order)
     "div.#{div}:nth-child(#{digit order})"
   end
 end
+def field_no(lbl,ordr)
+  id = find(:css, "label", :text => lbl)[:for]
+  field = find_field(id)
+  if field.tag_name == 'textarea'
+    "textarea##{id.gsub(/\d/,zdigit(ordr).to_s)}"
+  else
+    "input##{id.gsub(/\d/,zdigit(ordr).to_s)}"
+  end
+end
 
 def cat_id(cat,id,order)
   if cat=="listing"
     list_no(id,order) 
   elsif cat=="section"
     section_no(id,order) 
+  elsif cat=="field"
+    field_no(id,order)
   end
 end
