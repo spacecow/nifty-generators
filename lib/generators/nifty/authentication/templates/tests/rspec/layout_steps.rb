@@ -28,6 +28,12 @@ Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) (.+) (\w+)$/ do |tx
   And %(I should see "#{txt2}" within the #{order} #{id} #{cat})
 end
 
+# ACTIVE ----------------------
+
+Then /^the submenu "([^"]*)" should be active$/ do |menu|
+  page.should have_css("li.active", :text => menu)
+end
+
 # EXISTENCE -------------------
 
 Then /^I should see a (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
