@@ -38,6 +38,9 @@ end
 Then /^"([^"]*)" should be selected in the "([^"]*)" field$/ do |txt, lbl|
   find_field(lbl).native.xpath("//option[@selected]").inner_html.should eq txt
 end
+Then /^nothing should be selected in the "([^"]*)" field$/ do |txt, lbl|
+  find_field(lbl).native.xpath("//option[@selected]").inner_html.should be_blank
+end
 
 # Buttons ------------------------------
 
