@@ -13,6 +13,11 @@ Then /^I should see "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt,order,i
     page.should have_content(txt)
   end
 end
+Then /^I should not see "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt,order,id,cat|
+  with_scope(cat_id(cat,id,order)) do
+    page.should have_no_content(txt)
+  end
+end
 
 Then /^I should see "([^"]*)" within the "([^"]*)" section$/ do |txt,div|
   Then %(I should see "#{txt}" within "div##{underscore div}")
