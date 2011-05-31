@@ -98,6 +98,17 @@ Then /^I should see a "([^"]*)" link$/ do |lnk|
   page.should have_css("a", :text => lnk)
 end
 
+Then /^I should see (?:a|an) "([^"]*)" link within the "([^"]*)" section$/ do |lnk,id|
+  with_scope("div##{id}") do
+    page.should have_css("a", :text => lnk)
+  end
+end
+Then /^I should see no "([^"]*)" link within the "([^"]*)" section$/ do |lnk,id|
+  with_scope("div##{id}") do
+    page.should have_no_css("a", :text => lnk)
+  end
+end
+
 Then /^I should see a "([^"]*)" image link$/ do |lnk|
   page.should have_css("a img", :alt => lnk)
 end
