@@ -68,9 +68,12 @@ Then /^I should see (?:a|an) "([^"]*)" (section|form)$/ do |id,cat|
     page.should have_css("form##{id}")
   end 
 end
-
-Then /^I should see no "([^"]*)" section$/ do |id|
-  page.should have_no_css("div##{id}")
+Then /^I should see no "([^"]*)" (section|form)$/ do |id,cat|
+  if cat=="section"
+    page.should have_no_css("div##{id}")
+  elsif cat=="form"
+    page.should have_no_css("form##{id}")
+  end 
 end
 
 Then /^I should see no (\w+) flash message$/ do |cat|
