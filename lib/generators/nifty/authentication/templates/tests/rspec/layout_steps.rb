@@ -34,11 +34,11 @@ end
 
 # ACTIVE ----------------------
 
-Then /^the submenu "([^"]*)" should be active$/ do |menu|
-  page.should have_css("li.active", :text => menu)
+Then /^the (?:menu|submenu) "([^"]*)" should be active$/ do |menu|
+  page.should have_css(".active", :text => menu)
 end
-Then /^the submenu "([^"]*)" should be inactive$/ do |menu|
-  page.should have_no_css("li.active", :text => menu)
+Then /^the (?:menu|submenu) "([^"]*)" should be inactive$/ do |menu|
+  page.should have_no_css(".active", :text => menu)
 end
 
 # EXISTENCE -------------------
