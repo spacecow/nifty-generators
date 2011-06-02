@@ -28,6 +28,11 @@ end
 
 # AND ----------------------------
 
+Then /^I should see "([^"]*)" and "([^"]*)" within the "([^"]*)" (\w+)$/ do |txt1,txt2,id,cat|
+  Then %(I should see "#{txt1}" within the "#{id}" #{cat})
+  And %(I should see "#{txt2}" within the "#{id}" #{cat})
+end
+
 Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt1,txt2,order,id,cat|
   Then %(I should see "#{txt1}" within the #{order} "#{id}" #{cat})
   And %(I should see "#{txt2}" within the #{order} "#{id}" #{cat})
