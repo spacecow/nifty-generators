@@ -37,6 +37,11 @@ Then /^I should see "([^"]*)" but not "([^"]*)" within the (\w+) "([^"]*)" (\w+)
   And %(I should not see "#{txt2}" within the #{order} "#{id}" #{cat})
 end
 
+Then /^I should see no "([^"]*)" nor "([^"]*)" link within the (\w+) "([^"]*)" (\w+)/ do |txt1,txt2,order,id,cat|
+  Then %(I should see no "#{txt1}" link within the #{order} "#{id}" #{cat})
+  And %(I should see no "#{txt2}" link within the #{order} "#{id}" #{cat})
+end
+
 # ACTIVE ----------------------
 
 Then /^the (?:menu|submenu) "([^"]*)" should be active$/ do |menu|
@@ -84,6 +89,8 @@ Then /^I should see no links at the bottom of the page$/ do
   page.should have_no_css("div#bottom_links a")
 end
 
+# Image ----------------------------
+
 Then /^I should see (?:a|an) "([^"]*)" image$/ do |alt|
   page.should have_xpath("//img[@alt='#{alt}']")
 end
@@ -105,6 +112,10 @@ Then /^I should see a "([^"]*)" image within "([^"]*)"$/ do |img,id|
   with_scope(id) do
     page.should have_xpath("//img[@alt='#{img}']")
   end
+end
+
+Then /^I should see a "([^"]*)" tooltip$/ do |ttl|
+  page.should have_xpath("//img[@title='#{ttl}']")
 end
 
 # LINKS -----------------------
