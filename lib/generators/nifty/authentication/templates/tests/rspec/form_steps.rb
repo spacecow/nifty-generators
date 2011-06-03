@@ -97,7 +97,7 @@ Then /^I should see no "([^"]*)" field$/ do |lbl|
 end
 
 Then /^I should see (\d+) "([^"]*)" fields$/ do |no,lbl|
-  all(:css, "label", :text => lbl).length.should eq no
+  all(:css, "label", :text => lbl).length.should eq no.to_i
 end
 
 # Functions ----------------------------
