@@ -50,6 +50,9 @@ end
 Then /^I should see (?:a|an) "([^"]*)" button$/ do |lbl|
   page.should have_button(lbl)
 end
+Then /^I should see no "([^"]*)" button$/ do |lbl|
+  page.should have_no_button(lbl)
+end
 
 # Fields -------------------------------
 
