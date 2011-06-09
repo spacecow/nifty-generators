@@ -28,6 +28,15 @@ end
 
 # AND ----------------------------
 
+Then /^I should see "([^"]*)" and "([^"]*)" within the "([^"]*)" (\w+)$/ do |txt1,txt2,id,cat|
+  Then %(I should see "#{txt1}" within the "#{id}" #{cat})
+  And %(I should see "#{txt2}" within the "#{id}" #{cat})
+end
+Then /^I should see "([^"]*)" but no "([^"]*)" within the "([^"]*)" (\w+)$/ do |txt1,txt2,id,cat|
+  Then %(I should see "#{txt1}" within the "#{id}" #{cat})
+  And %(I should not see "#{txt2}" within the "#{id}" #{cat})
+end
+
 Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt1,txt2,order,id,cat|
   Then %(I should see "#{txt1}" within the #{order} "#{id}" #{cat})
   And %(I should see "#{txt2}" within the #{order} "#{id}" #{cat})
@@ -35,6 +44,11 @@ end
 Then /^I should see "([^"]*)" but not "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt1,txt2,order,id,cat|
   Then %(I should see "#{txt1}" within the #{order} "#{id}" #{cat})
   And %(I should not see "#{txt2}" within the #{order} "#{id}" #{cat})
+end
+
+Then /^I should see no "([^"]*)" nor "([^"]*)" link within the (\w+) "([^"]*)" (\w+)/ do |txt1,txt2,order,id,cat|
+  Then %(I should see no "#{txt1}" link within the #{order} "#{id}" #{cat})
+  And %(I should see no "#{txt2}" link within the #{order} "#{id}" #{cat})
 end
 
 # ACTIVE ----------------------
@@ -84,6 +98,14 @@ Then /^I should see no links at the bottom of the page$/ do
   page.should have_no_css("div#bottom_links a")
 end
 
+Then /^I should see no "([^"]*)" section within the (\w+) "([^"]*)" (\w+)/ do |id,ordr,id2,cat|
+  with_scope(cat_id(cat,id2,ordr)) do
+    page.should have_no_css("div##{id}")
+  end
+end
+
+# Image ----------------------------
+
 Then /^I should see (?:a|an) "([^"]*)" image$/ do |alt|
   page.should have_xpath("//img[@alt='#{alt}']")
 end
@@ -105,6 +127,10 @@ Then /^I should see a "([^"]*)" image within "([^"]*)"$/ do |img,id|
   with_scope(id) do
     page.should have_xpath("//img[@alt='#{img}']")
   end
+end
+
+Then /^I should see a "([^"]*)" tooltip$/ do |ttl|
+  page.should have_xpath("//img[@title='#{ttl}']")
 end
 
 # LINKS -----------------------
@@ -149,6 +175,11 @@ end
 
 When /^I follow "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |lnk,order,id,cat|
   When %(I follow "#{lnk}" within "#{cat_id(cat,id,order)}")
+end
+
+When /^I follow "([^"]*)" and press "OK"$/ do |lbl|
+  page.evaluate_script('window.confirm = function() { return true; }')
+  page.click_link(lbl)
 end
 
 # FUNCTIONS -------------------
