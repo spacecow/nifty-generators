@@ -32,6 +32,10 @@ Then /^I should see "([^"]*)" and "([^"]*)" within the "([^"]*)" (\w+)$/ do |txt
   Then %(I should see "#{txt1}" within the "#{id}" #{cat})
   And %(I should see "#{txt2}" within the "#{id}" #{cat})
 end
+Then /^I should see "([^"]*)" but no "([^"]*)" within the "([^"]*)" (\w+)$/ do |txt1,txt2,id,cat|
+  Then %(I should see "#{txt1}" within the "#{id}" #{cat})
+  And %(I should not see "#{txt2}" within the "#{id}" #{cat})
+end
 
 Then /^I should see "([^"]*)" and "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |txt1,txt2,order,id,cat|
   Then %(I should see "#{txt1}" within the #{order} "#{id}" #{cat})
@@ -94,6 +98,12 @@ end
 
 Then /^I should see no links at the bottom of the page$/ do
   page.should have_no_css("div#bottom_links a")
+end
+
+Then /^I should see no "([^"]*)" section within the (\w+) "([^"]*)" (\w+)/ do |id,ordr,id2,cat|
+  with_scope(cat_id(cat,id2,ordr)) do
+    page.should have_no_css("div##{id}")
+  end
 end
 
 # Image ----------------------------
@@ -167,6 +177,11 @@ end
 
 When /^I follow "([^"]*)" within the (\w+) "([^"]*)" (\w+)$/ do |lnk,order,id,cat|
   When %(I follow "#{lnk}" within "#{cat_id(cat,id,order)}")
+end
+
+When /^I follow "([^"]*)" and press "OK"$/ do |lbl|
+  page.evaluate_script('window.confirm = function() { return true; }')
+  page.click_link(lbl)
 end
 
 # FUNCTIONS -------------------
