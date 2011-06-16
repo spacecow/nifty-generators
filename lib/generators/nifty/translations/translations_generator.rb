@@ -21,8 +21,8 @@ module Nifty
           #template "Gemfile", "Gemfile"
           #template 'generator', 'generator'
         end
-        copy_file 'translations_controller.rb', 'app/controller/translations_controller.rb'
-        copy_file 'locales_controller.rb', 'app/controller/locales_controller.rb'
+        copy_file 'translations_controller.rb', 'app/controllers/translations_controller.rb'
+        copy_file 'locales_controller.rb', 'app/controllers/locales_controller.rb'
         copy_file 'locale.rb', 'app/models/locale.rb'
         copy_file 'translation.rb', 'app/models/translation.rb'
         copy_file 'index.html.erb', 'app/views/translations/index.html.erb'
