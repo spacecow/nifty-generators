@@ -34,7 +34,6 @@ module Nifty
         copy_file 'cucumber/translations/new.feature', 'features/translations/new.feature'
         copy_file 'cucumber/locales/new.feature', 'features/locales/new.feature'
         copy_file 'cucumber/locales/error.feature', 'features/locales/error.feature'
-        copy_file 'cucumber/locales/edit.feature', 'features/locales/edit.feature'
         copy_file 'cucumber/locales/view.feature', 'features/locales/view.feature'
         copy_file 'cucumber/redis_steps.rb', 'features/step_definitions/redis_steps.rb'
         copy_file 'rspec/translations_controller_spec.rb', 'spec/controllers/translations_controller_spec.rb'

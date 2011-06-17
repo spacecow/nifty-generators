@@ -1,11 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-def controller_actions(controller)
-  Rails.application.routes.routes.inject({}) do |hash, route|
-    hash[route.requirements[:action]] = route.verb.downcase if route.requirements[:controller] == controller && !route.verb.nil?
-    hash
-  end
-end
 
 describe TranslationsController do
   controller_actions = controller_actions("translations")
@@ -32,7 +26,7 @@ describe TranslationsController do
 
   describe "an admin is logged in" do
     before(:each) do
-      @user = Factory(:user)
+      @user = Factory(:user, :roles_mask => 2)
       session[:user_id] = @user.id
     end
     
