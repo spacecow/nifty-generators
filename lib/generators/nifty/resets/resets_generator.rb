@@ -20,6 +20,7 @@ module Nifty
         copy_file 'reset_mailer.rb', 'app/mailers/reset_mailer.rb'
         copy_file 'reset_password_controller.rb', 'app/models/reset_password_controller.rb'
         copy_file 'change_password.html.erb', 'app/views/users/change_password.html.erb'
+        copy_file '_change_password_form.html.erb', 'app/views/users/_change_password_form.html.erb'
         
         route "resources :resets, :only => [:new,:create]"
         route "# FOR USERS"
