@@ -43,11 +43,28 @@ end
 
 # Selection ----------------------------
 
+When /^I select "([^"]*)" from the (\w+) "([^"]*)" field for "([^"]*)"$/ do |sel,ordr,lbl,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  When %(I select "#{sel}" from "#{id}")
+end
+
+Then /^"([^"]*)" should be selected in the (\w+) "([^"]*)" field for "([^"]*)"$/ do |sel,ordr,lbl,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  Then %("#{sel}" should be selected in the "#{id}" field)
+end
+Then /^nothing should be selected in the (\w+) "([^"]*)" field for "([^"]*)"$/ do |ordr,lbl,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  Then %(nothing should be selected in the "#{id}" field)
+end
+
 Then /^"([^"]*)" should be selected in the "([^"]*)" field$/ do |txt, lbl|
-  find_field(lbl).native.xpath("//option[@selected]").inner_html.should eq txt
+  find_field(lbl).first(:xpath, "option[@selected]").text.should eq txt
 end
 Then /^nothing should be selected in the "([^"]*)" field$/ do |lbl|
-  find_field(lbl).native.xpath("//option[@selected]").inner_html.should be_blank
+  find_field(lbl).first(:xpath, "option[@selected]").should be_nil 
 end
 
 Then /^the "([^"]*)" field should have options "([^"]*)"$/ do |lbl,optns|
@@ -55,6 +72,10 @@ Then /^the "([^"]*)" field should have options "([^"]*)"$/ do |lbl,optns|
 end
 
 # Buttons ------------------------------
+
+When /^I press "([^"]*)" in the (\w+) "([^"]*)" listing for "([^"]*)"$/ do |lbl,ordr,chld,prnt|
+  find(:xpath, "//input[@id='#{prnt}[#{chld}_attributes][#{zdigit ordr}]_submit'][@value='#{lbl}']").click
+end
 
 When /^I press the button$/ do
   find(:xpath, "//input[@type='submit']").click
@@ -67,6 +88,12 @@ Then /^I should see no "([^"]*)" button$/ do |lbl|
 end
 
 # Fields -------------------------------
+
+Then /^the (\w+) "([^"]*)" field for "([^"]*)" should be empty$/ do |ordr,lbl,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  Then %(the "#{id}" field should be empty)
+end
 
 Then /^the "([^"]*)" field should be empty$/ do |lbl|
   field = find_field(lbl)
@@ -86,11 +113,21 @@ Then /^the (\w+) through (\w+) "([^"]*)" fields? should be empty$/ do |ordr1,ord
   end  
 end
 
+Then /^the (\w+) "([^"]*)" field should contain "([^"]*)" for "([^"]*)"$/ do |ordr,lbl,txt,prnt|
+  Then %(the "#{field_id(lbl,ordr,prnt)}" field should contain "#{txt}")
+end
+
 Then /^the (\w+) "([^"]*)" field should contain "([^"]*)"$/ do |ordr,lbl,txt|
   Then %(the "#{field_id(lbl,ordr)}" field should contain "#{txt}")
 end
 Then /^the (\w+) "([^"]*)" field should not contain "([^"]*)"$/ do |ordr,lbl,txt|
   Then %(the "#{field_id(lbl,ordr)}" field should not contain "#{txt}")
+end
+
+When /^I fill in the (\w+) "([^"]*)" field with "([^"]*)" for "([^"]*)"$/ do |ordr,lbl,txt,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  When %(I fill in "#{id}" with "#{txt}")
 end
 
 When /^I fill in the (\w+) "([^"]*)" with "([^"]*)"$/ do |ordr,lbl,txt|
@@ -123,6 +160,12 @@ Then /^I should see no "([^"]*)" field$/ do |lbl|
   page.should have_no_css("label", :text => lbl)
 end
 
+Then /^I should see no (\w+) "([^"]*)" field for "([^"]*)"$/ do |ordr,lbl,prnt|
+  chld, attr = lbl.split[0..1]
+  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+  page.should have_no_css("##{id}")
+end
+  
 Then /^I should see (\d+) "([^"]*)" fields$/ do |no,lbl|
   all(:css, "label", :text => lbl).length.should eq no.to_i
 end
@@ -135,6 +178,8 @@ end
 def error_no(prnt,chld,attr,ordr)
   "#{attr_no(prnt,chld,attr,ordr)} p.inline-errors"
 end
-def field_id(lbl,ordr)
-  all(:css, "label", :text => lbl)[zdigit(ordr)][:for]
+def field_id(lbl,ordr,prnt=nil)
+  return all(:css, "label", :text => lbl)[zdigit(ordr)][:for] if prnt.nil?
+  chld, attr = lbl.split[0..1]
+  "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
 end

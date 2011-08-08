@@ -3,10 +3,7 @@ def underscore(s); s.gsub(/\s/,'_') end
 def zdigit(ordr); digit(ordr)-1 end
 def zword(i); %w(first second third fourth fifth sixth seventh eighth ninth tenth eleventh)[i] end
 
-def table_row(tbl="",order)
-  return "table##{tbl} tr:nth-child(#{digit order})" unless tbl.blank?
-  "table tr:nth-child(#{digit order})"
-end
+# FUNCTIONS -------------------
 
 def list_no(lst=nil,order)
   if lst.nil?
@@ -20,6 +17,13 @@ def section_no(div=nil,order)
     "div:nth-child(#{digit order})"
   else
     "div.#{div}:nth-child(#{digit order})"
+  end
+end
+def table_row(tbl=nil,order)
+  if tbl.nil?
+    "table tr:nth-child(#{digit order})"
+  else
+    "table##{tbl} tr:nth-child(#{digit order})"
   end
 end
 def field_no(lbl,ordr)
@@ -37,7 +41,11 @@ def cat_id(cat,id,order)
     list_no(id,order) 
   elsif cat=="section"
     section_no(id,order) 
+  elsif cat=="section"
+    section_no(id,order) 
   elsif cat=="field"
     field_no(id,order)
+  elsif cat=="table row"
+    table_row(id,order)
   end
 end

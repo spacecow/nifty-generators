@@ -105,7 +105,7 @@ Then /^I should see links "([^"]*)" at the (\w+) of the page$/ do |lnks,pos|
 end
 
 When /^I follow "([^"]*)" at the bottom of the page$/ do |lnk|
-  When %(I follow "#{lnk}" within the "bottom links" section)
+  When %(I follow "#{lnk}" within the "bottom_links" section)
 end
 
 When /^I click the image "([^"]*)"$/ do |file|
