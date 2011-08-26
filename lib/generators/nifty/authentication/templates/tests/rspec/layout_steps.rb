@@ -30,6 +30,14 @@ end
 
 # EXISTENCE -------------------
 
+Then /^I should see (\d+) "([^"]*)" listing$/ do |no,assoc|
+  page.all(:css, "fieldset##{assoc}").count.should == no.to_i
+end
+
+Then /^I should see no (\w+) "([^"]*)" listing$/ do |ordr,assoc|
+  page.all(:css, "fieldset##{assoc}").count.should < digit(ordr)
+end
+
 Then /^I should see a (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
   page.should have_css(cat_id(cat,id,order))
 end
@@ -39,9 +47,9 @@ Then /^I should see a (\w+) through (\w+) "([^"]*)" (\w+)$/ do |ordr1,ordr2,id,c
   end  
 end
 
-Then /^I should see no (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
-  page.should have_no_css(cat_id(cat,id,order))
-end
+#Then /^I should see no (\w+) "([^"]*)" (\w+)$/ do |order,id,cat|
+#  page.should have_no_css(cat_id(cat,id,order))
+#end
 
 Then /^I should see (?:a|an) "([^"]*)" (section|form)$/ do |id,cat|
   if cat=="section"

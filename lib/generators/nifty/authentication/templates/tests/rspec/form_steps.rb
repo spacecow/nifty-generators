@@ -1,5 +1,13 @@
 # Error messages ----------------------
 
+Then /^I should see an error "([^"]*)" at the (\w+) "([^"]*)" field$/ do |err,ordr,attr|
+  parent_child_attributes?(ordr,attr,%(I should see an error "#{err}" at the #id field))
+  #page.should have_css("li##{mdl}_#{attr}_input p.inline-errors", :text => txt)
+end
+Then /^I should see an error "([^"]*)" at the "([^"]*)" field$/ do |err,attr|
+  page.should have_css("li##{attr}_input p.inline-errors", :text => err)
+end
+
 Then /^I should see (?:a|an) (\w+) (\w+) error "([^"]*)"$/ do |mdl,attr,txt|
   page.should have_css("li##{mdl}_#{attr}_input p.inline-errors", :text => txt)
 end
@@ -43,21 +51,19 @@ end
 
 # Selection ----------------------------
 
-When /^I select "([^"]*)" from the (\w+) "([^"]*)" field for "([^"]*)"$/ do |sel,ordr,lbl,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  When %(I select "#{sel}" from "#{id}")
+Then /^the (\w+) "([^"]*)" field should have options "([^"]*)"$/ do |ordr,attr,optns|
+  parent_child_attributes?(ordr,attr,%(the #id field should have options "#{optns}"))
 end
 
-Then /^"([^"]*)" should be selected in the (\w+) "([^"]*)" field for "([^"]*)"$/ do |sel,ordr,lbl,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  Then %("#{sel}" should be selected in the "#{id}" field)
+When /^I select "([^"]*)" from the (\w+) "([^"]*)" field$/ do |sel,ordr,attr|
+  parent_child_attributes?(ordr,attr,%(I select "#{sel}" from #id))
 end
-Then /^nothing should be selected in the (\w+) "([^"]*)" field for "([^"]*)"$/ do |ordr,lbl,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  Then %(nothing should be selected in the "#{id}" field)
+
+Then /^"([^"]*)" should be selected in the (\w+) "([^"]*)" field$/ do |sel,ordr,attr|
+  parent_child_attributes?(ordr,attr,%("#{sel}" should be selected in the #id field))
+end
+Then /^nothing should be selected in the (\w+) "([^"]*)" field$/ do |ordr,attr|
+  parent_child_attributes?(ordr,attr,%(nothing should be selected in the #id field))
 end
 
 Then /^"([^"]*)" should be selected in the "([^"]*)" field$/ do |txt, lbl|
@@ -89,12 +95,6 @@ end
 
 # Fields -------------------------------
 
-Then /^the (\w+) "([^"]*)" field for "([^"]*)" should be empty$/ do |ordr,lbl,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  Then %(the "#{id}" field should be empty)
-end
-
 Then /^the "([^"]*)" field should be empty$/ do |lbl|
   field = find_field(lbl)
   if field.tag_name == 'textarea'
@@ -104,30 +104,29 @@ Then /^the "([^"]*)" field should be empty$/ do |lbl|
     field_value.should be_empty 
   end
 end
-Then /^the (\w+) "([^"]*)" field should be empty$/ do |ordr,lbl|
-  Then %(the "#{field_id(lbl,ordr)}" field should be empty)
+Then /^the (\w+) "([^"]*)" field should be empty$/ do |ordr,attr|
+  unless parent_child_attributes?(ordr,attr,"the #id field should be empty")
+    Then %(the "#{field_id(lbl,ordr)}" field should be empty)
+  end
 end
+
 Then /^the (\w+) through (\w+) "([^"]*)" fields? should be empty$/ do |ordr1,ordr2,lbl|
   (zdigit(ordr1)..zdigit(ordr2)).each do |ordr|
     Then %(the "#{field_id(lbl,zword(ordr))}" field should be empty)
   end  
 end
 
-Then /^the (\w+) "([^"]*)" field should contain "([^"]*)" for "([^"]*)"$/ do |ordr,lbl,txt,prnt|
-  Then %(the "#{field_id(lbl,ordr,prnt)}" field should contain "#{txt}")
+Then /^the (\w+) "([^"]*)" field should contain "([^"]*)"$/ do |ordr,attr,txt|
+  parent_child_attributes?(ordr,attr,%(the #id field should contain "#{txt}"))
+  #Then %(the "#{field_id(lbl,ordr)}" field should contain "#{txt}")
 end
 
-Then /^the (\w+) "([^"]*)" field should contain "([^"]*)"$/ do |ordr,lbl,txt|
-  Then %(the "#{field_id(lbl,ordr)}" field should contain "#{txt}")
-end
 Then /^the (\w+) "([^"]*)" field should not contain "([^"]*)"$/ do |ordr,lbl,txt|
   Then %(the "#{field_id(lbl,ordr)}" field should not contain "#{txt}")
 end
 
-When /^I fill in the (\w+) "([^"]*)" field with "([^"]*)" for "([^"]*)"$/ do |ordr,lbl,txt,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  When %(I fill in "#{id}" with "#{txt}")
+When /^I fill in the (\w+) "([^"]*)" field with "([^"]*)"$/ do |ordr,attr,txt|
+  parent_child_attributes?(ordr,attr,%(I fill in #id with "#{txt}"))
 end
 
 When /^I fill in the (\w+) "([^"]*)" with "([^"]*)"$/ do |ordr,lbl,txt|
@@ -158,12 +157,11 @@ Then /^I should see (?:a|an) "([^"]*)" field$/ do |lbl|
 end
 Then /^I should see no "([^"]*)" field$/ do |lbl|
   page.should have_no_css("label", :text => lbl)
+  page.should have_no_css("##{lbl}")
 end
 
-Then /^I should see no (\w+) "([^"]*)" field for "([^"]*)"$/ do |ordr,lbl,prnt|
-  chld, attr = lbl.split[0..1]
-  id = "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
-  page.should have_no_css("##{id}")
+Then /^I should see no (\w+) "([^"]*)" field$/ do |ordr,attr|
+  no_parent_child_attributes?(ordr,attr,"I should see no #id field")
 end
   
 Then /^I should see (\d+) "([^"]*)" fields$/ do |no,lbl|
@@ -182,4 +180,36 @@ def field_id(lbl,ordr,prnt=nil)
   return all(:css, "label", :text => lbl)[zdigit(ordr)][:for] if prnt.nil?
   chld, attr = lbl.split[0..1]
   "#{prnt}_#{chld}_attributes_#{zdigit ordr}_#{attr}"
+end
+
+def parent_child_attributes?(ordr,attr,clause)
+  form_id = find(:css, "form")[:id]
+  fieldset_ids = all(:css, "fieldset").map{|e| e[:id]}
+  fieldset_ids.each do |fieldset_id|
+    id = "#{form_id}_#{fieldset_id}_attributes_#{zdigit ordr}_#{attr}"
+    begin
+      find_field(id)
+      Then clause.gsub(/#id/,%("#{id}"))
+      return true 
+    rescue Capybara::ElementNotFound => e
+    end
+  end
+  :cannot_find_field.should eq attr
+  return false
+end
+
+def no_parent_child_attributes?(ordr,attr,clause)
+  form_id = find(:css, "form")[:id]
+  fieldset_ids = all(:css, "fieldset").map{|e| e[:id]}
+  fieldset_ids.each do |fieldset_id|
+    id = "#{form_id}_#{fieldset_id}_attributes_#{zdigit ordr}_#{attr}"
+    begin
+      find_field(id)
+      p clause.gsub(/#id/,%("#{id}")) 
+      Then clause.gsub(/#id/,%("#{id}"))
+      return false 
+    rescue Capybara::ElementNotFound => e
+    end
+  end
+  return true
 end
