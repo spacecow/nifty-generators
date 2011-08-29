@@ -119,3 +119,10 @@ end
 When /^I click the image "([^"]*)"$/ do |file|
   find(:xpath, "//a/img[@alt='#{file}']/..").click
 end
+
+# TABLES -------------------------------
+
+Then /^I should see the following (\w+):$/ do |mdl,tbl|
+  tbl.diff! tableish("table##{mdl} tr", 'td')
+end
+
