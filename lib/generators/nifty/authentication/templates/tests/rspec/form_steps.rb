@@ -49,6 +49,13 @@ Then /^the "([^"]*)" hint should say "([^"]*)"$/ do |lbl, txt|
   page.should have_css("li##{id}_input p.inline-hints", :text => txt)
 end
 
+# Checkbox -----------------------------
+
+When /I check the (\w+) "([^"]*)"/ do |ordr,lbl|
+  id = all(:css, "label", :text => lbl)[zdigit(ordr)][:for]
+  When %(I check "#{id}") 
+end
+
 # Selection ----------------------------
 
 Then /^the (\w+) "([^"]*)" field should have options "([^"]*)"$/ do |ordr,attr,optns|
