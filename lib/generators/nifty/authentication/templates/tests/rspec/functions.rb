@@ -21,9 +21,9 @@ def section_no(div=nil,order)
 end
 def table_row(tbl=nil,order)
   if tbl.nil?
-    "table tr:nth-child(#{digit order})"
+    "div.table div.outer div.inner:nth-child(#{digit order})"
   else
-    "table##{tbl} tr:nth-child(#{digit order})"
+    "div.table##{tbl} div.outer div.inner:nth-child(#{digit order})"
   end
 end
 def field_no(lbl,ordr)

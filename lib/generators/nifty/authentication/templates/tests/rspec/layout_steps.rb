@@ -1,5 +1,6 @@
 # TEXT -------------------------
 
+
 Then /^I should see "([^"]*)" as (\w+) flash message$/ do |txt,cat|
   Then %(I should see "#{txt}" within "div#flash_#{cat}")
 end
@@ -115,6 +116,10 @@ end
 When /^I follow "([^"]*)" at the bottom of the page$/ do |lnk|
   When %(I follow "#{lnk}" within the "bottom_links" section)
 end
+When /^I follow "([^"]*)" at the footer of the page$/ do |lnk|
+  When %(I follow "#{lnk}" within the "footer" section)
+end
+
 
 When /^I click the image "([^"]*)"$/ do |file|
   find(:xpath, "//a/img[@alt='#{file}']/..").click
@@ -123,6 +128,6 @@ end
 # TABLES -------------------------------
 
 Then /^I should see the following (\w+):$/ do |mdl,tbl|
-  tbl.diff! tableish("table##{mdl} tr", 'td')
+  tbl.diff! tableish("div.table##{mdl} div.outer div.inner", 'span')
 end
 

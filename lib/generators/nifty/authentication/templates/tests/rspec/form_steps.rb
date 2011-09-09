@@ -11,6 +11,12 @@ end
 Then /^I should see (?:a|an) (\w+) (\w+) error "([^"]*)"$/ do |mdl,attr,txt|
   page.should have_css("li##{mdl}_#{attr}_input p.inline-errors", :text => txt)
 end
+
+Then /^I should see (?:a|an) "([^"]*)" error "([^"]*)"$/ do |lbl,txt|
+  mdl_attr = find(:css, "label", :text => lbl)[:for].split('_')
+  Then %(I should see a #{mdl_attr[0]} #{mdl_attr[1..-1].join('_')} error "#{txt}")
+end
+
 Then /^I should see (?:a|an) (\w+) (\w+) error "([^"]*)" on the (\w+) (\w+)/ do |prnt,attr,txt,ordr,chld|
   page.should have_css("li##{prnt}_#{chld.pluralize}_attributes_#{zdigit ordr}_#{attr}_input p.inline-errors", :text => txt)
 end
@@ -86,10 +92,6 @@ end
 
 # Buttons ------------------------------
 
-When /^I press "([^"]*)" in the (\w+) "([^"]*)" listing for "([^"]*)"$/ do |lbl,ordr,chld,prnt|
-  find(:xpath, "//input[@id='#{prnt}[#{chld}_attributes][#{zdigit ordr}]_submit'][@value='#{lbl}']").click
-end
-
 When /^I press the button$/ do
   find(:xpath, "//input[@type='submit']").click
 end
@@ -124,8 +126,11 @@ Then /^the (\w+) through (\w+) "([^"]*)" fields? should be empty$/ do |ordr1,ord
 end
 
 Then /^the (\w+) "([^"]*)" field should contain "([^"]*)"$/ do |ordr,attr,txt|
-  parent_child_attributes?(ordr,attr,%(the #id field should contain "#{txt}"))
-  #Then %(the "#{field_id(lbl,ordr)}" field should contain "#{txt}")
+  if all(:css, "label", :text => attr).empty?
+    parent_child_attributes?(ordr,attr,%(the #id field should contain "#{txt}"))
+  else
+    Then %(the "#{field_id(attr,ordr)}" field should contain "#{txt}") 
+  end
 end
 
 Then /^the (\w+) "([^"]*)" field should not contain "([^"]*)"$/ do |ordr,lbl,txt|
